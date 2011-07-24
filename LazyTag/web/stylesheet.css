@@ -1,0 +1,47 @@
+table.table1 {
+    border-spacing: inherit;
+    font-size: 80%;
+    font-family: sans-serif;
+    border-style: solid;
+    border-color: powderblue;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FFFFFF', EndColorStr='#A9D0F5');
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+     font-weight: normal;
+     text-align: left;
+}
+/* odd rows */
+.evenRow {
+    font-size: 15px;
+    font-family: sans-serif;
+}
+/* even rows */
+.oddRow {
+    background-color: white;
+    font-size: 15px;
+    font-family: sans-serif;
+}
+
+input {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.error{
+    color: red;
+}
+
+.success{
+    color: blue;
+}
+.headerRow{
+    color: blue;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.title{
+    text-align: center;
+}

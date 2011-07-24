@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+    <managed-bean>
+        <managed-bean-name>userBean</managed-bean-name>
+        <managed-bean-class>lazytag.src.beans.UserBean</managed-bean-class>
+
+        <managed-bean-scope>request</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>loginBean</managed-bean-name>
+        <managed-bean-class>lazytag.src.beans.LoginBean</managed-bean-class>
+
+        <managed-bean-scope>request</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>userListBean</managed-bean-name>
+        <managed-bean-class>lazytag.src.beans.UserListBean</managed-bean-class>
+
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>searchusers</from-outcome>
+            <to-view-id>searchusers.jsp</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>login.jsp</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <application>
+        <locale-config>
+            <default-locale>en</default-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>lazytag.src.resources.messages</base-name>
+            <var>msg</var>
+        </resource-bundle>
+        <message-bundle>
+            lazytag.src.resources.messages
+        </message-bundle>
+    </application>
+    <validator>
+        <validator-id>EmailValidator</validator-id>
+        <validator-class>lazytag.src.resources.EmailValidator</validator-class>
+    </validator>
+    <validator>
+        <validator-id>AlphaNumValidator</validator-id>
+        <validator-class>lazytag.src.resources.AlphaNumValidator</validator-class>
+    </validator>
+    <validator>
+        <validator-id>AlphaValidator</validator-id>
+        <validator-class>lazytag.src.resources.AlphaValidator</validator-class>
+    </validator>
+</faces-config>
