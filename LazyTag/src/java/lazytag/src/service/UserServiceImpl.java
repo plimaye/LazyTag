@@ -57,7 +57,8 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public List<User> searchUser(int roleId, String firstName, String lastName, String email, String login) {
+    public List<User> searchUser(int roleId, String firstName, String lastName, String email, String login, String sortParam, String sortOrder, 
+            int rowCount, int rowOffset) {
         String query = "SELECT * FROM user WHERE role_id < ? ";
 
         if (firstName != null && !firstName.trim().equals("")) {
@@ -72,6 +73,15 @@ public class UserServiceImpl implements UserService {
         if (login != null && !login.trim().equals("")) {
             query += "AND login LIKE '" + login.replaceAll("'", "''") + "%'";
         }
+
+        if (sortParam != null && !sortParam.trim().equals("")
+                && sortOrder != null && !sortOrder.trim().equals("")) {
+            query += "ORDER BY " + sortParam + " " + sortOrder + "";
+        }
+
+        query += " LIMIT " + rowCount + ", " + rowOffset + "";
+
+        System.out.println("search query: " + query);
 
         List<User> users = new ArrayList<User>();
         users = em.createNativeQuery(query, User.class).setParameter(1, roleId).getResultList();
@@ -113,4 +123,28 @@ public class UserServiceImpl implements UserService {
             return true;
         }
     }
+
+    @Override
+    public int searchUserCount(int roleId, String firstName, String lastName, String email, String login) {
+        Long count;
+
+        String query = "SELECT COUNT(1) FROM user WHERE role_id < ? ";
+
+        if (firstName != null && !firstName.trim().equals("")) {
+            query += "AND firstName LIKE '" + firstName.replaceAll("'", "''") + "%'";
+        }
+        if (lastName != null && !lastName.trim().equals("")) {
+            query += "AND lastName LIKE '" + lastName.replaceAll("'", "''") + "%'";
+        }
+        if (email != null && !email.trim().equals("")) {
+            query += "AND email LIKE '" + email.replaceAll("'", "''") + "%'";
+        }
+        if (login != null && !login.trim().equals("")) {
+            query += "AND login LIKE '" + login.replaceAll("'", "''") + "%'";
+        }
+        count = (Long) em.createNativeQuery(query).setParameter(1, roleId).getSingleResult();
+        return count.intValue();
+    }
+
+
 }

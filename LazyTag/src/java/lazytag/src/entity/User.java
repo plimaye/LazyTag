@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 /**
  * Entity mapping for DB
- * @author Priya
+ * @author Nandini
  */
 @Entity
 @Table(name = "user")
@@ -136,6 +136,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "exterro.src.entity.User[userId=" + userId + "]";
+        return "lazytag.src.entity.User[userId=" + userId + "]";
     }
 }

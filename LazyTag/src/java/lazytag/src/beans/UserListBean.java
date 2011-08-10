@@ -16,7 +16,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.apache.myfaces.custom.datascroller.HtmlDataScroller;
 
 /**
  *
@@ -34,6 +33,70 @@ public class UserListBean {
     private String lastName;
     private String email;
     private boolean displaySearch;
+    private int pageSize = 5;
+    private int numberOfRecords;
+    private int numberOfPages;
+    private List<Integer> pages;
+    private String sortParam;
+    private String sortOrder;
+
+    public String getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(String sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public String getSortParam() {
+        return sortParam;
+    }
+
+    public void setSortParam(String sortParam) {
+        this.sortParam = sortParam;
+    }
+
+    public List<Integer> getPages() {
+        return pages;
+    }
+
+    public void setPages(List<Integer> pages) {
+        this.pages = pages;
+    }
+    private Integer currentPage;
+
+    public Integer getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(Integer currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public int getNumberOfPages() {
+        return numberOfPages;
+    }
+
+    public void setNumberOfPages(int numberOfPages) {
+        this.numberOfPages = numberOfPages;
+    }
+
+    public int getNumberOfRecords() {
+        return numberOfRecords;
+    }
+
+    public void setNumberOfRecords(int numberOfRecords) {
+        this.numberOfRecords = numberOfRecords;
+    }
+
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
     public boolean isDisplaySearch() {
         return displaySearch;
@@ -96,6 +159,7 @@ public class UserListBean {
         FacesContext context = FacesContext.getCurrentInstance();
         List<UserModel> userModelList = new ArrayList<UserModel>();
         User sessionUser = (User) context.getExternalContext().getSessionMap().get("user");
+
         if (null == sessionUser) {
             HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
             session.invalidate();
@@ -104,9 +168,9 @@ public class UserListBean {
             int roleId = new Integer(sessionUser.getRoleId());
             if (sessionUser != null && roleId == new Integer(new MessageProvider().getValue("admin")).intValue()) {
                 displaySearch = true;
-                context = FacesContext.getCurrentInstance();
-                HtmlDataScroller data = (HtmlDataScroller) context.getViewRoot().findComponent("searchuser:scroller");
-                data.getUIData().setFirst(0);
+//                context = FacesContext.getCurrentInstance();
+//                HtmlDataScroller data = (HtmlDataScroller) context.getViewRoot().findComponent("searchuser:scroller");
+//                data.getUIData().setFirst(0);
 
 
 //                HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
@@ -115,7 +179,42 @@ public class UserListBean {
 //                email = (String) session.getAttribute("email");
 //                login = (String) session.getAttribute("login");
 
-                List<User> users = userService.searchUser(roleId, firstName, lastName, email, login);
+
+
+                if(sortParam == null){
+                    sortParam = "user_id";
+                }
+                if(sortOrder == null){
+                    sortOrder = "ASC";
+                }
+
+                if(currentPage == null){
+                    currentPage = 1;
+                }
+
+                String currPage = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("currentPage");
+
+                if (currPage != null) {
+                    currentPage = new Integer(currPage);
+                }
+
+                System.out.println("currentPage: " + currentPage);
+
+                
+                numberOfRecords = userService.searchUserCount(roleId, firstName, lastName, email, login);
+                System.out.println("numberOfRecords: " + numberOfRecords);
+                numberOfPages = numberOfRecords / pageSize + 1;
+                pages = new ArrayList<Integer>();
+                for(int i=0;i<numberOfPages ; i++ ){
+                    pages.add(i+1);
+                }
+
+                System.out.println("numberOfPages: " + numberOfPages);
+
+                int startRecord = (currentPage-1) * pageSize;
+
+
+                List<User> users = userService.searchUser(roleId, firstName, lastName, email, login, sortParam, sortOrder, startRecord, pageSize);
                 System.out.println("Here in search users: " + users.size() + " ");
                 for (User user : users) {
                     UserModel userModel = new UserModel(user.getUserId(), user.getLogin(),
@@ -156,4 +255,58 @@ public class UserListBean {
         session.invalidate();
         return "login";
     }
+
+    public String changeSorting() {
+        String sort = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("sortParam");
+
+        if (sort != null) {
+            if (sortParam.equalsIgnoreCase(sort)) {
+                if (sortOrder.equalsIgnoreCase("ASC")) {
+                    sortOrder = "DESC";
+                } else {
+                    sortOrder = "ASC";
+                }
+            } else {
+                sortParam = sort;
+                sortOrder = "ASC";
+            }
+        }
+        currentPage = 1;
+//        System.out.println(sortParam + " " + sortOrder);
+//        if(sortOrder == null){
+//            sortOrder = "ASC";
+//        }else if(sortOrder.equalsIgnoreCase("ASC")){
+//            sortOrder = "DESC";
+//        }else if(sortOrder.equalsIgnoreCase("DESC")){
+//            sortOrder = "ASC";
+//        }
+        searchUser();
+        return null;
+    }
+
+    public String getFirstPage(){
+        currentPage = 1;
+        searchUser();
+        return null;
+    }
+
+    public String getPrevPage(){
+        currentPage = currentPage - 1;
+        searchUser();
+        return null;
+    }
+
+    public String getNextPage() {
+        currentPage = currentPage + 1;
+        searchUser();
+        return null;
+    }
+
+    public String getLastPage() {
+        currentPage = numberOfPages;
+        searchUser();
+        return null;
+    }
+
+
 }

@@ -15,7 +15,7 @@ import javax.faces.validator.ValidatorException;
 
 /**
  *
- * @author Priya
+ * @author Nandini
  */
 public class UserBean {
 

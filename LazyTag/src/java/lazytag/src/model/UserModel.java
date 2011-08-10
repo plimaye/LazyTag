@@ -6,7 +6,7 @@ package lazytag.src.model;
 
 /**
  * Model class used to display list of users.
- * @author Priya
+ * @author Nandini
  */
 
 public class UserModel {
