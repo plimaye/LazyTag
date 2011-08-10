@@ -168,16 +168,6 @@ public class UserListBean {
             int roleId = new Integer(sessionUser.getRoleId());
             if (sessionUser != null && roleId == new Integer(new MessageProvider().getValue("admin")).intValue()) {
                 displaySearch = true;
-//                context = FacesContext.getCurrentInstance();
-//                HtmlDataScroller data = (HtmlDataScroller) context.getViewRoot().findComponent("searchuser:scroller");
-//                data.getUIData().setFirst(0);
-
-
-//                HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-//                firstName = (String) session.getAttribute("firstName");
-//                lastName = (String) session.getAttribute("lastName");
-//                email = (String) session.getAttribute("email");
-//                login = (String) session.getAttribute("login");
 
 
 
@@ -232,18 +222,6 @@ public class UserListBean {
         }
     }
 
-    /**
-     * Search user as per input criteria. This method is called when Search button is clicked.
-     * @return
-     */
-//    public void search() {
-//        FacesContext context = FacesContext.getCurrentInstance();
-//        HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-//        session.setAttribute("firstName", this.getFirstName());
-//        session.setAttribute("lastName", this.getLastName());
-//        session.setAttribute("email", this.getEmail());
-//        session.setAttribute("login", this.getLogin());
-//    }
 
     /**
      * Sign out from the system
@@ -272,14 +250,6 @@ public class UserListBean {
             }
         }
         currentPage = 1;
-//        System.out.println(sortParam + " " + sortOrder);
-//        if(sortOrder == null){
-//            sortOrder = "ASC";
-//        }else if(sortOrder.equalsIgnoreCase("ASC")){
-//            sortOrder = "DESC";
-//        }else if(sortOrder.equalsIgnoreCase("DESC")){
-//            sortOrder = "ASC";
-//        }
         searchUser();
         return null;
     }
