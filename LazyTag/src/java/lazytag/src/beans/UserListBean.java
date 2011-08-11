@@ -1,6 +1,20 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+    Copyright© 2011 Priya Limaye, Nandini Mahendran
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    Contact: plimaye@pdx.edu, mnandini@pdx.edu
  */
 package lazytag.src.beans;
 
@@ -193,7 +207,13 @@ public class UserListBean {
                 
                 numberOfRecords = userService.searchUserCount(roleId, firstName, lastName, email, login);
                 System.out.println("numberOfRecords: " + numberOfRecords);
-                numberOfPages = numberOfRecords / pageSize + 1;
+                if(numberOfRecords > 0){
+                    numberOfPages = numberOfRecords / pageSize + 1;
+                }
+                else{
+                    numberOfPages = 0;
+                }
+
                 pages = new ArrayList<Integer>();
                 for(int i=0;i<numberOfPages ; i++ ){
                     pages.add(i+1);
@@ -250,6 +270,14 @@ public class UserListBean {
             }
         }
         currentPage = 1;
+        searchUser();
+        return null;
+    }
+
+    public String search(){
+        sortParam = "user_id";
+        currentPage = 1;
+        sortOrder = "ASC";
         searchUser();
         return null;
     }
