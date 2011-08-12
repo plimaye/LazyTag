@@ -1,12 +1,12 @@
 -------------------------------------------------------------
 README
 -------------------------------------------------------------
-LAZY TABLE
+LAZY TAG
 An alternative solution to JSF “dataTable” session overload
 -------------------------------------------------------------
 Install Guide.
 -------------------------------------------------------------
-The Lazy Table solution uses the following technologies
+The Lazy Tag solution uses the following technologies
 
 •	JSF 2.0 (MVC framework for building J2EE based web applications)
 •	AJAX4JSF
