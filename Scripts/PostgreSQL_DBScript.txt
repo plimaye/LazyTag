@@ -1,0 +1,78 @@
+CREATE DATABASE sampledb;
+
+CREATE TABLE USERROLE
+(
+  role_id int(5) auto_increment,
+  role VARCHAR(20),
+  PRIMARY KEY (role_id)
+);
+
+
+INSERT INTO userrole (role) VALUES ('USER');
+INSERT INTO userrole (role) VALUES ('ADMIN');
+
+CREATE TABLE USER
+(
+  user_id int(10) auto_increment,
+  login VARCHAR(100),
+  password VARCHAR(20),
+  firstName VARCHAR(100),
+  lastName VARCHAR(100),
+  email VARCHAR(50),
+  role_id int(5) DEFAULT '1',
+  PRIMARY KEY (user_id),
+  FOREIGN KEY (role_id) REFERENCES userrole(role_id) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+INSERT INTO USER(login, password ,firstName, lastName,email,role_id)  VALUES('admin', 'admin', 'admin', 'admin', 'admin@pdx.edu', '2');
+
+
+
+
+------
+
+CREATE SEQUENCE role_seq START 1;
+CREATE SEQUENCE users_seq START 1;
+
+CREATE TABLE USERROLE
+(
+  role_id integer PRIMARY KEY DEFAULT nextval('role_seq'),
+  role VARCHAR(20)
+);
+
+
+INSERT INTO userrole (role) VALUES ('USER');
+INSERT INTO userrole (role) VALUES ('ADMIN');
+
+CREATE TABLE USERS
+(
+  user_id integer PRIMARY KEY DEFAULT nextval('role_seq'),
+  login VARCHAR(100),
+  password VARCHAR(20),
+  firstName VARCHAR(100),
+  lastName VARCHAR(100),
+  email VARCHAR(50),
+  role_id integer DEFAULT '1' REFERENCES userrole(role_id)   
+);
+
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('admin', 'admin', 'admin', 'admin', 'admin@pdx.edu', '2');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('bogo', 'bogo', 'bogo', 'bogo', 'bogo@pdx.edu', '2');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('cat', 'cat', 'cat', 'cat', 'cat@pdx.edu', '2');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Dora', 'Dora', 'Dora', 'Dora', 'Dora@pdx.edu', '2');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Edna', 'Edna', 'Edna', 'Edna', 'Edna@pdx.edu', '2');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Frodo', 'Frodo', 'Frodo', 'Frodo', 'Frodo@pdx.edu', '1');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Gaby', 'Gaby', 'Gaby', 'Gaby', 'Gaby@pdx.edu', '1');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Hobo', 'Hobo', 'Hobo', 'Hobo', 'Hobo@pdx.edu', '2');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Igor', 'Igor', 'Igor', 'Igor', 'Igor@pdx.edu', '2');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Jeeves', 'Jeeves', 'Jeeves', 'Jeeves', 'Jeeves@pdx.edu', '2');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Keno', 'Keno', 'Keno', 'Keno', 'Keno@pdx.edu', '2');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Leo', 'Leo', 'Leo', 'Leo', 'Leo@pdx.edu', '1');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Mogo', 'Mogo', 'Mogo', 'Mogo', 'Mogo@pdx.edu', '2');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Nat', 'Nat', 'Nat', 'Nat', 'Nat@pdx.edu', '2');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Opo', 'Opo', 'Opo', 'Opo', 'Opo@pdx.edu', '2');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Pedro', 'Pedro', 'Pedro', 'Pedro', 'Pedro@pdx.edu', '1');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Qwet', 'Qwet', 'Qwet', 'Qwet', 'Qwet@pdx.edu', '1');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Rene', 'Rene', 'Rene', 'Rene', 'Rene@pdx.edu', '1');
+INSERT INTO USERS(login, password ,firstName, lastName,email,role_id)  VALUES('Saruman', 'Saruman', 'Saruman', 'Saruman', 'Saruman@pdx.edu', '1');
+
+

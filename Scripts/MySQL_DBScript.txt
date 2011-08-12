@@ -1,0 +1,31 @@
+CREATE DATABASE sampledb;
+
+CREATE TABLE USERROLE
+(
+  role_id int(5) auto_increment,
+  role VARCHAR(20),
+  PRIMARY KEY (role_id)
+);
+
+
+INSERT INTO userrole (role) VALUES ('USER');
+INSERT INTO userrole (role) VALUES ('ADMIN');
+
+CREATE TABLE USER
+(
+  user_id int(10) auto_increment,
+  login VARCHAR(100),
+  password VARCHAR(20),
+  firstName VARCHAR(100),
+  lastName VARCHAR(100),
+  email VARCHAR(50),
+  role_id int(5) DEFAULT '1',
+  PRIMARY KEY (user_id),
+  FOREIGN KEY (role_id) REFERENCES userrole(role_id) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+INSERT INTO USER(login, password ,firstName, lastName,email,role_id)  VALUES('admin', 'admin', 'admin', 'admin', 'admin@pdx.edu', '2');
+
+
+
+
