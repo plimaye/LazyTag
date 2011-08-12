@@ -48,7 +48,7 @@ public class UserListBean {
     private String email;
     private boolean displaySearch;
     private int pageSize = 5;
-    private int numberOfRecords;
+    private double numberOfRecords;
     private int numberOfPages;
     private List<Integer> pages;
     private String sortParam;
@@ -95,7 +95,7 @@ public class UserListBean {
         this.numberOfPages = numberOfPages;
     }
 
-    public int getNumberOfRecords() {
+    public double getNumberOfRecords() {
         return numberOfRecords;
     }
 
@@ -208,7 +208,10 @@ public class UserListBean {
                 numberOfRecords = userService.searchUserCount(roleId, firstName, lastName, email, login);
                 System.out.println("numberOfRecords: " + numberOfRecords);
                 if(numberOfRecords > 0){
-                    numberOfPages = numberOfRecords / pageSize + 1;
+                    System.out.println(Math.ceil((double)(numberOfRecords / pageSize)) + " "
+                            + (double)(numberOfRecords / pageSize));
+                    numberOfPages =  (int) Math.ceil((double)(numberOfRecords / pageSize)) ;
+
                 }
                 else{
                     numberOfPages = 0;
